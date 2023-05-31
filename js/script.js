@@ -10,14 +10,25 @@ function uniqueRandomNumber(array, number){
         if(!array.includes(number)){
             check = true;
     }
-    
     }
     return true;
 }
 
-//array vuoto che contiene numeri generati e uno conterra` i numeri inseriti dall'utente
+//FUNZIONE CHE PERMETTE INSIERMENTO DEI NUMNERI DELL'UTENTE
+function getUserNumbers(){
+    let userNumbers = [];
+
+    while(userNumbers.length < 5){
+        let number = parseInt(prompt('Inserisci un numero'));
+        if(!userNumbers.includes(number)){
+            userNumbers.push(number);
+        }
+    }
+    return userNumbers;
+}
+
+//array vuoto che contiene numeri generati
 let randomNumbers = [];
-let userNumbers = [];
 
 //ESEGUIRE CICLO FOR PER POPOLARE ARRAY DEI NUMERI CASUALI
 for(let i=0; i<5; i++){
@@ -26,4 +37,24 @@ for(let i=0; i<5; i++){
         randomNumbers.push(number);
     }
 }
-console.log(randomNumbers)
+
+document.getElementById('random-numbers').innerHTML = randomNumbers;
+
+setTimeout(function(){
+    document.getElementById('random-numbers').innerHTML = '';
+    document.getElementById('message').innerHTML = 'Inserire i numeri che ti ricordi';
+}, 30000);
+
+setTimeout(function(){
+    //RICHIAMO LA FUNZIONE CHE PERMETTE L'INSERIMENTO DEI NUMERI DA PARTE DELL'UTENTE
+    let userNumbers = getUserNumbers();
+    let guessedNumbers = []
+    let score = 0;
+    for(let i=0; i < userNumbers.length; i++){
+        if(randomNumbers.includes(userNumbers[i])){
+            guessedNumbers.push(userNumbers[i]);
+            score++;
+        }
+    }
+    document.getElementById('message').innerHTML = `Hai indovinato ${score} numeri. I numeri corretti sono ${guessedNumbers}`;
+}, 31000);
